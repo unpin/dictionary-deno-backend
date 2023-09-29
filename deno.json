@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "dev": "deno run -A --watch app.ts"
+  },
+  "imports": {
+    "std/": "https://deno.land/std@0.194.0/",
+    "oak": "https://deno.land/x/oak@v12.6.0/mod.ts",
+    "mongo": "https://deno.land/x/mongo@v0.31.2/mod.ts",
+    "zod": "https://deno.land/x/zod@v3.21.4/mod.ts",
+    "bcrypt": "https://deno.land/x/bcrypt@v0.4.0/mod.ts",
+    "djwt": "https://deno.land/x/djwt@v2.9.1/mod.ts"
+  }
+}
