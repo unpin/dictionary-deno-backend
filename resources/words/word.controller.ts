@@ -1,11 +1,9 @@
-import { Context, createHttpError, RouterContext, Status } from "oak";
+import { Context, RouterContext, Status } from "oak";
 import { Word, WordDefinition, WordInterface } from "./word.model.ts";
 import { ObjectId } from "mongo";
 
 export async function addWord(ctx: Context) {
   const body = await ctx.request.body().value as WordInterface;
-  if (!body) throw createHttpError(Status.BadRequest, "Body content is missin");
-
   const newDoc: Omit<WordInterface, "_id"> = {
     word: body.word,
     definitions: [],
