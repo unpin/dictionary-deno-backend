@@ -5,5 +5,9 @@ export async function cors(
   next: () => Promise<unknown>,
 ) {
   response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set(
+    "Access-Control-Allow-Headers",
+    "Origin, Content-Type, Authorization",
+  );
   await next();
 }
