@@ -9,7 +9,7 @@ export const CRYPTO_KEY = await crypto.subtle.importKey(
   ["sign", "verify"],
 );
 
-export function sign(payload: Payload) {
+export function signToken(payload: Payload) {
   const iat = getNumericDate(new Date());
   const exp = iat + 60 * 60 * 24;
   return create(

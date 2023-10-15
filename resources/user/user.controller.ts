@@ -1,7 +1,7 @@
 import { Context, createHttpError, Status } from "oak";
 import { User } from "./user.model.ts";
 import { compareSync, hashSync } from "bcrypt";
-import { sign } from "../../common/jwt.ts";
+import { signToken } from "../../common/jwt.ts";
 
 export async function signup(ctx: Context) {
   const { name, email, password } = await ctx.request.body({ type: "json" })
@@ -15,7 +15,7 @@ export async function signup(ctx: Context) {
     email,
     password: hashedPassword,
   });
-  const token = await sign({ _id, email });
+  const token = await signToken({ _id, email });
   ctx.response.body = { name, email, token };
 }
 
@@ -30,7 +30,7 @@ export async function signin(ctx: Context) {
   if (!compareSync(password, user.password)) {
     throw createHttpError(Status.BadRequest, "Password is incorrect");
   }
-  const token = await sign({ _id: user._id, email: user.email });
+  const token = await signToken({ _id: user._id, email: user.email });
   ctx.response.body = { name: user.name, email: user.email, token };
 }
 
