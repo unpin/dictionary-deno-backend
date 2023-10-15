@@ -9,7 +9,7 @@ export const app = new Application();
 
 app.use(errorHandler);
 app.use(cors);
-app.use(userRouter.routes());
-app.use(wordRouter.routes());
+app.use(userRouter.routes(), userRouter.allowedMethods());
+app.use(wordRouter.routes(), wordRouter.allowedMethods());
 
 await app.listen({ port: Number(PORT) });
