@@ -66,7 +66,7 @@ export async function getBookmarkedWords(ctx: Context) {
   const page = Number(ctx.request.url.searchParams.get("page")) || 1;
   const limit = Number(ctx.request.url.searchParams.get("limit")) || 10;
 
-  ctx.response.body = await Word.findMany({}, {
+  ctx.response.body = await Word.findMany({ userId: new ObjectId(userId) }, {
     limit,
     skip: (page - 1) * limit,
   });
