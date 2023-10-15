@@ -5,7 +5,7 @@ import { Schema } from "../../database/SchemaValidator.ts";
 export interface WordDefinition {
   _id: ObjectId;
   meaning: string;
-  example: string;
+  examples: string[];
   reviews: number;
 }
 
@@ -21,7 +21,7 @@ const definitionSchema: Schema = {
   type: { type: String },
   definition: { type: String },
   usageLabel: { type: String },
-  example: { type: String },
+  examples: { type: [String] },
   reviews: { type: Number },
 };
 

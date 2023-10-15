@@ -18,7 +18,7 @@ export async function addWord(ctx: Context) {
         newDoc.definitions.push({
           _id: new ObjectId(),
           meaning: def.meaning,
-          example: def.example,
+          examples: def.examples || [],
           reviews: 0,
         });
       }
