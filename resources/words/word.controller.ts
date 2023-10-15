@@ -27,7 +27,7 @@ export async function addWord(ctx: Context) {
 
   const _id = await Word.create(newDoc);
   ctx.response.status = Status.Created;
-  ctx.response.body = _id;
+  ctx.response.body = { _id };
 }
 
 export async function searchWords(ctx: RouterContext<string>) {
