@@ -1,4 +1,6 @@
 import {
+  AggregateOptions,
+  AggregatePipeline,
   CountOptions,
   Database,
   DeleteOptions,
@@ -71,6 +73,10 @@ export class Query<T> {
 
   async countDocuments(filter: Filter<Document>, options?: CountOptions) {
     return await this.getCollection().countDocuments(filter, options);
+  }
+
+  aggregate(pipeline: AggregatePipeline<T>[], options?: AggregateOptions) {
+    return this.getCollection().aggregate(pipeline, options);
   }
 
   private getCollection() {
