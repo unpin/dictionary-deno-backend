@@ -145,6 +145,7 @@ export async function reviewWords(ctx: RouterContext<string>) {
     {
       $unwind: {
         path: "$definitions",
+        preserveNullAndEmptyArrays: false,
       },
     },
     {
