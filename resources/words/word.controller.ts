@@ -77,15 +77,18 @@ export async function getBookmarkedWords(ctx: Context) {
 }
 
 export async function addDefinition(ctx: RouterContext<string>) {
+  const userId = ctx.state.payload._id;
   const { wordId } = ctx.params;
   const data = await ctx.request.body().value;
   const definition = {
     _id: new ObjectId(),
     meaning: data.meaning,
     example: data.example,
+    reviews: 0,
   };
   const res = await Word.updateOne({
     _id: new ObjectId(wordId),
+    userId: new ObjectId(userId),
   }, {
     $push: {
       definitions: definition,
