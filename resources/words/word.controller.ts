@@ -83,7 +83,7 @@ export async function addDefinition(ctx: RouterContext<string>) {
   const definition = {
     _id: new ObjectId(),
     meaning: data.meaning,
-    examples: [data.example],
+    examples: [data.examples],
     reviews: 0,
   };
   const res = await Word.updateOne({
