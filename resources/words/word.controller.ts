@@ -3,8 +3,11 @@ import { Word, WordDefinition, WordInterface } from "./word.model.ts";
 import { ObjectId } from "mongo";
 
 export async function addWord(ctx: Context) {
+  const userId = ctx.state.payload._id;
   const body = await ctx.request.body().value as WordInterface;
+
   const newDoc: Omit<WordInterface, "_id"> = {
+    userId: new ObjectId(userId),
     word: body.word,
     definitions: [],
   };
@@ -16,6 +19,7 @@ export async function addWord(ctx: Context) {
           _id: new ObjectId(),
           meaning: def.meaning,
           example: def.example,
+          reviews: 0,
         });
       }
     });
