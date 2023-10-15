@@ -156,3 +156,16 @@ export async function reviewWords(ctx: RouterContext<string>) {
   ]).toArray();
   ctx.response.body = words;
 }
+
+export async function incrementReviews(ctx: RouterContext<string>) {
+  const { wordId, definitionId } = ctx.params;
+  const res = await Word.updateOne({
+    _id: new ObjectId(wordId),
+    "definitions._id": new ObjectId(definitionId),
+  }, {
+    $inc: {
+      "definitions.$.reviews": 1,
+    },
+  });
+  ctx.response.body = res;
+}

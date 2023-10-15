@@ -4,6 +4,7 @@ import {
   addWord,
   findWordById,
   getBookmarkedWords,
+  incrementReviews,
   removeDefinition,
   removeWord,
   reviewWords,
@@ -24,5 +25,6 @@ wordRouter
   .post("/words/:wordId/definition", addDefinition)
   .patch("/words/:wordId", updateWord)
   .patch("/words/:wordId/definition/:definitionId", updateDefinition)
+  .patch("/words/reviews/:wordId/:definitionId", incrementReviews)
   .delete("/words/:wordId", removeWord)
   .delete("/words/:wordId/definition/:definitionId", removeDefinition);
