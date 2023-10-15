@@ -6,6 +6,7 @@ import {
   getBookmarkedWords,
   removeDefinition,
   removeWord,
+  reviewWords,
   searchWords,
   updateDefinition,
   updateWord,
@@ -18,6 +19,7 @@ wordRouter
   .get("/words/bookmarks", getBookmarkedWords)
   .get("/words/search/:query", searchWords)
   .get("/words/id/:wordId", findWordById)
+  .get("/words/review", reviewWords)
   .post("/words", addWord)
   .post("/words/:wordId/definition", addDefinition)
   .patch("/words/:wordId", updateWord)

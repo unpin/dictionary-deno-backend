@@ -132,3 +132,27 @@ export async function removeDefinition(ctx: RouterContext<string>) {
   });
   ctx.response.body = res;
 }
+
+export async function reviewWords(ctx: RouterContext<string>) {
+  const WORDS_REVIEW_LIMIT = 10;
+  const userId = ctx.state.payload._id;
+  const words = await Word.aggregate([
+    {
+      $match: {
+        userId: new ObjectId(userId),
+      },
+    },
+    {
+      $unwind: {
+        path: "$definitions",
+      },
+    },
+    {
+      $sort: { "definitions.reviews": 1 },
+    },
+    {
+      $limit: WORDS_REVIEW_LIMIT,
+    },
+  ]).toArray();
+  ctx.response.body = words;
+}
