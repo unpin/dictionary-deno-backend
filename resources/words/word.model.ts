@@ -6,10 +6,12 @@ export interface WordDefinition {
   _id: ObjectId;
   meaning: string;
   example: string;
+  reviews: number;
 }
 
 export interface WordInterface {
   _id: ObjectId;
+  userId: ObjectId;
   word: string;
   article?: string;
   definitions: WordDefinition[];
@@ -20,6 +22,7 @@ const definitionSchema: Schema = {
   definition: { type: String },
   usageLabel: { type: String },
   example: { type: String },
+  reviews: { type: Number },
 };
 
 const wordSchema: Schema = {
