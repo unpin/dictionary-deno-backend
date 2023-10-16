@@ -149,7 +149,9 @@ export async function reviewWords(ctx: RouterContext<string>) {
     {
       $limit: WORDS_REVIEW_LIMIT,
     },
-    { $project: { userId: 0, "definitions.reviews": 0 } },
+    { $project: { userId: 0 } },
+    { $set: { definition: "$definitions" } },
+    { $unset: "definitions" },
   ]).toArray();
   ctx.response.body = words;
 }
