@@ -24,7 +24,7 @@ export async function signin(ctx: Context) {
 
   const user = await User.findOne({ email });
   if (!user) {
-    throw createHttpError(Status.BadRequest, "User with the email not found");
+    throw createHttpError(Status.BadRequest, "User with this email not found");
   }
   if (!compareSync(password, user.password)) {
     throw createHttpError(Status.BadRequest, "Password is incorrect");
