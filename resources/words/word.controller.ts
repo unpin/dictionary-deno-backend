@@ -3,7 +3,7 @@ import { Word, WordDefinition, WordInterface } from "./word.model.ts";
 import { ObjectId } from "mongo";
 
 export async function addWord(ctx: Context) {
-  const userId = ctx.state.payload._id;
+  const { _id } = ctx.state.payload;
   const body = await ctx.request.body().value as WordInterface;
 
   const newDoc: Omit<WordInterface, "_id"> = {
@@ -29,7 +29,7 @@ export async function addWord(ctx: Context) {
   ctx.response.status = Status.Created;
   ctx.response.body = { _id: createdId };
 }
-
+// TODO add pagination
 export async function searchWords(ctx: RouterContext<string>) {
   let { query } = ctx.params;
   query = query.replaceAll(/[\(\)]/g, ".*");
@@ -61,7 +61,6 @@ export async function updateWord(ctx: RouterContext<string>) {
   ctx.response.body = updated;
 }
 
-// TODO Should return user's bookmarks
 export async function getBookmarkedWords(ctx: Context) {
   const { _id } = ctx.state.payload;
 

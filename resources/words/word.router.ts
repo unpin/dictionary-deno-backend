@@ -17,14 +17,15 @@ import { isAuth } from "../../middleware/isAuth.ts";
 export const wordRouter = new Router();
 wordRouter
   .use(isAuth)
-  .get("/words/bookmarks", getBookmarkedWords)
-  .get("/words/search/:query", searchWords)
-  .get("/words/id/:wordId", findWordById)
-  .get("/words/review", reviewWords)
   .post("/words", addWord)
   .post("/words/:wordId/definition", addDefinition)
+  .get("/words/:wordId", findWordById)
+  // TODO move bookmarks to /bookmarks route
+  .get("/bookmarks", getBookmarkedWords)
+  .get("/search/:query", searchWords)
+  .get("/review", reviewWords)
   .patch("/words/:wordId", updateWord)
   .patch("/words/:wordId/definition/:definitionId", updateDefinition)
-  .patch("/words/reviews/:wordId/:definitionId", incrementReviews)
+  .patch("/review/:wordId/:definitionId", incrementReviews)
   .delete("/words/:wordId", removeWord)
   .delete("/words/:wordId/definition/:definitionId", removeDefinition);
