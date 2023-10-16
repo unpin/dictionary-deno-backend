@@ -13,7 +13,7 @@ Log.setup({
   },
 });
 
-export default {
+export const Logger = {
   debug: Log.debug,
   info: Log.info,
   warning: Log.warning,
