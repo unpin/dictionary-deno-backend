@@ -6,8 +6,8 @@ import { signToken } from "../../common/jwt.ts";
 export async function signup(ctx: Context) {
   const { name, email, password } = await ctx.request.body({ type: "json" })
     .value;
-  const foundUser = await User.findOne({ email });
-  if (foundUser) throw createHttpError(Status.Conflict);
+  const user = await User.findOne({ email });
+  if (user) throw createHttpError(Status.Conflict);
   const hashedPassword = hashSync(password);
   const _id = await User.create({
     name,
