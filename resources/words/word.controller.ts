@@ -7,7 +7,7 @@ export async function addWord(ctx: Context) {
   const body = await ctx.request.body().value as WordInterface;
 
   const newDoc: Omit<WordInterface, "_id"> = {
-    userId: new ObjectId(userId),
+    userId: new ObjectId(_id),
     word: body.word,
     definitions: [],
   };
@@ -25,9 +25,9 @@ export async function addWord(ctx: Context) {
     });
   }
 
-  const _id = await Word.create(newDoc);
+  const createdId = await Word.create(newDoc);
   ctx.response.status = Status.Created;
-  ctx.response.body = { _id };
+  ctx.response.body = { _id: createdId };
 }
 
 export async function searchWords(ctx: RouterContext<string>) {
@@ -43,7 +43,7 @@ export async function searchWords(ctx: RouterContext<string>) {
 }
 
 export async function findWordById(ctx: RouterContext<string>) {
-  const wordId = ctx.params.wordId;
+  const { wordId } = ctx.params;
   const word = await Word.findOne({ _id: new ObjectId(wordId) });
   if (!word) return ctx.response.status = Status.NotFound;
   ctx.response.body = word;
@@ -65,19 +65,19 @@ export async function updateWord(ctx: RouterContext<string>) {
 
 // TODO Should return user's bookmarks
 export async function getBookmarkedWords(ctx: Context) {
-  const userId = ctx.state.payload._id;
+  const { _id } = ctx.state.payload;
 
   const page = Number(ctx.request.url.searchParams.get("page")) || 1;
   const limit = Number(ctx.request.url.searchParams.get("limit")) || 10;
 
-  ctx.response.body = await Word.findMany({ userId: new ObjectId(userId) }, {
+  ctx.response.body = await Word.findMany({ userId: new ObjectId(_id) }, {
     limit,
     skip: (page - 1) * limit,
   });
 }
 
 export async function addDefinition(ctx: RouterContext<string>) {
-  const userId = ctx.state.payload._id;
+  const { _id } = ctx.state.payload;
   const { wordId } = ctx.params;
   const data = await ctx.request.body().value;
   const definition = {
@@ -88,7 +88,7 @@ export async function addDefinition(ctx: RouterContext<string>) {
   };
   const res = await Word.updateOne({
     _id: new ObjectId(wordId),
-    userId: new ObjectId(userId),
+    userId: new ObjectId(_id),
   }, {
     $push: {
       definitions: definition,
@@ -135,11 +135,11 @@ export async function removeDefinition(ctx: RouterContext<string>) {
 
 export async function reviewWords(ctx: RouterContext<string>) {
   const WORDS_REVIEW_LIMIT = 10;
-  const userId = ctx.state.payload._id;
+  const { _id } = ctx.state.payload;
   const words = await Word.aggregate([
     {
       $match: {
-        userId: new ObjectId(userId),
+        userId: new ObjectId(_id),
       },
     },
     {
