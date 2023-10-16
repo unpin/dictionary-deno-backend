@@ -4,7 +4,7 @@ import { userRouter } from "./resources/user/user.router.ts";
 import { wordRouter } from "./resources/words/word.router.ts";
 import { cors } from "./middleware/cors.ts";
 import { errorHandler } from "./middleware/errorHandler.ts";
-import Logger from "./common/logger.ts";
+import { Logger } from "./common/logger.ts";
 
 export const app = new Application();
 
