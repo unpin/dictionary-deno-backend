@@ -11,7 +11,6 @@ export async function isAuth(ctx: Context, next: Next) {
 
   try {
     const payload = await verifyToken(token);
-    console.log({ payload });
     ctx.state.payload = payload;
   } catch {
     throw createHttpError(Status.Unauthorized, "Authorization token invalid");

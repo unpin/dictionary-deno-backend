@@ -31,8 +31,6 @@ export async function addWord(ctx: Context) {
 }
 
 export async function searchWords(ctx: RouterContext<string>) {
-  console.log("searhWords");
-
   let { query } = ctx.params;
   query = query.replaceAll(/[\(\)]/g, ".*");
   const pattern = new RegExp(`^${query}`, "i");
@@ -123,8 +121,6 @@ export async function removeWord(ctx: RouterContext<string>) {
 
 export async function removeDefinition(ctx: RouterContext<string>) {
   const { wordId, definitionId } = ctx.params;
-  console.log({ wordId, definitionId });
-
   const res = await Word.updateOne({
     _id: new ObjectId(wordId),
   }, {

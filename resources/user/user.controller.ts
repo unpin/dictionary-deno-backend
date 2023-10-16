@@ -9,7 +9,6 @@ export async function signup(ctx: Context) {
   const foundUser = await User.findOne({ email });
   if (foundUser) throw createHttpError(Status.Conflict);
   const hashedPassword = hashSync(password);
-  console.log(hashedPassword);
   const _id = await User.create({
     name,
     email,
