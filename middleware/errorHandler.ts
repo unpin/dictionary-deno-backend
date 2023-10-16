@@ -1,4 +1,5 @@
 import { Context, isHttpError, Next, Status } from "oak";
+import { Logger } from "../common/logger.ts";
 
 export async function errorHandler(
   { response }: Context,
@@ -12,9 +13,10 @@ export async function errorHandler(
       if (e.expose) {
         response.body = { error: e.message };
       }
+      Logger.debug(e);
     } else {
       response.status = Status.InternalServerError;
+      Logger.error(e);
     }
-    console.error(e);
   }
 }
