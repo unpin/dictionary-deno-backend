@@ -42,10 +42,7 @@ export async function getByEmail(ctx: Context) {
   }
   ctx.response.status = Status.OK;
   ctx.response.body = {
-    status: Status.OK,
-    data: {
-      name: user.name,
-      email: user.email,
-    },
+    name: user.name,
+    email: user.email,
   };
 }
