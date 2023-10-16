@@ -96,15 +96,17 @@ export async function addDefinition(ctx: RouterContext<string>) {
 
 export async function updateDefinition(ctx: RouterContext<string>) {
   const { wordId, definitionId } = ctx.params;
-  const { meaning, example } = await ctx.request.body().value;
+  const body = await ctx.request.body().value;
+  const update: Record<string, unknown> = Object.keys(body)
+    .reduce((
+      obj: Record<string, unknown>,
+      field: string,
+    ) => (obj[`definitions.$.${field}`] = body[field], obj), {});
   const res = await Word.updateOne({
     _id: new ObjectId(wordId),
     "definitions._id": new ObjectId(definitionId),
   }, {
-    $set: {
-      "definitions.$.meaning": meaning,
-      "definitions.$.example": example,
-    },
+    $set: { ...update },
   });
   ctx.response.body = res;
 }
@@ -154,17 +156,4 @@ export async function reviewWords(ctx: RouterContext<string>) {
     { $unset: "definitions" },
   ]).toArray();
   ctx.response.body = words;
-}
-
-export async function incrementReviews(ctx: RouterContext<string>) {
-  const { wordId, definitionId } = ctx.params;
-  const res = await Word.updateOne({
-    _id: new ObjectId(wordId),
-    "definitions._id": new ObjectId(definitionId),
-  }, {
-    $inc: {
-      "definitions.$.reviews": 1,
-    },
-  });
-  ctx.response.body = res;
 }
