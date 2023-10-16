@@ -21,7 +21,6 @@ export async function signup(ctx: Context) {
 export async function signin(ctx: Context) {
   const { email, password } = await ctx.request.body({ type: "json" })
     .value;
-
   const user = await User.findOne({ email });
   if (!user) {
     throw createHttpError(Status.BadRequest, "User with this email not found");
