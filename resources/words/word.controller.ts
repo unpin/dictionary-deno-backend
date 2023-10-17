@@ -97,7 +97,10 @@ export async function addDefinition(ctx: RouterContext<string>) {
 export async function updateDefinition(ctx: RouterContext<string>) {
   const { wordId, definitionId } = ctx.params;
   const body = await ctx.request.body().value;
+  const allowedProps = ["meaning", "examples", "reviews"];
+  if (!Array.isArray(body.examples)) delete body.examples;
   const update: Record<string, unknown> = Object.keys(body)
+    .filter((prop) => (allowedProps.includes(prop)))
     .reduce((
       obj: Record<string, unknown>,
       field: string,
