@@ -18,4 +18,6 @@ app.addEventListener(
   () => void Logger.info(`Server listening on ${PORT}`),
 );
 
+Logger.info("Redeploying");
+
 await app.listen({ port: Number(PORT) });
